@@ -50,7 +50,17 @@ PanTiltController::PanTiltController(){
 
   pub_goal_pos = nh_.advertise<trajectory_msgs::JointTrajectory>("/dynamixel_workbench/joint_trajectory",1);
   sub_status   = nh_.subscribe("/dynamixel_workbench/joint_states", 1, &PanTiltController::jointStateCallback, this);
-  sub_com      = nh_.subscribe("/joint_states", 1, &PanTiltController::jointStateComCallback, this);
+  sub_com      = nh_.subscribe("/joint_states", 1, &PanTiltController::jointStateComCallback, this); //これが制御情報を受け取っている
+  /*
+  std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+string[] name
+float64[] position
+float64[] velocity
+float64[] effort
+*/
 
   dynamixel_req = nh_.serviceClient<dynamixel_workbench_msgs::DynamixelCommand>("/dynamixel_workbench/dynamixel_command");
 
@@ -220,7 +230,6 @@ int main(int argc, char **argv){
   ros::init(argc, argv, "pan_tilt_test");
 
   PanTiltController pan_tilt_controller;
-
   ros::NodeHandle nh;
 
   ros::Rate loop_rate(40);
@@ -242,7 +251,7 @@ int main(int argc, char **argv){
     pan_rad += delta_rad;
     tilt_rad += delta_rad;
 
-    pan_tilt_controller.sendGoalPos(pan_rad, tilt_rad, 0.02);
+    pan_tilt_controller.sendGoalPos(pan_rad, tilt_rad, 0.01);
     ros::spinOnce();
     loop_rate.sleep();
 

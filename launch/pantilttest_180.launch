@@ -1,7 +1,7 @@
 <!-- -->
 <launch>
 
-  <arg name="gui" default="True" />
+  <arg name="gui" default="False" />
 
   <node name="pan_tilt_test180" pkg="vs_pantilt_samples" type="pan_tilt_test180" />
   

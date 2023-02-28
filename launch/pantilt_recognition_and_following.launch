@@ -1,0 +1,9 @@
+<launch>
+    <!-- マーカーを追跡するかしないかの選択変数 -->
+    <arg name="use_marker_follow" default="true"/>
+    <include file="$(find vs_pantilt_samples)/launch/dynamixel_controllers_180.launch"/>
+	<include file="$(find vs_pantilt_samples)/launch/libuvc_camera.launch"/>
+    <node name="color_recognition" pkg="vs_pantilt_samples" type="color_recognition_pantilt.py"/>
+    <node  if="$(arg use_marker_follow)" name="pantilt_controller" pkg="vs_pantilt_samples" type="pantilt_controller.py"/>
+    <include file="$(find vs_pantilt_samples)/launch/pantilttest_180.launch"/>
+</launch>
