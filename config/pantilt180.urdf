@@ -1,0 +1,45 @@
+<robot name="pan_tilt">
+  <link name="pan_tilt_stay"/>
+
+  
+  <link name="pan_link">
+  </link>
+  <link name="tilt_link">
+  </link>
+  <link name="cam_link">
+    <visual>
+      <geometry>
+        <box size="0.042 0.1855 0.058"/>
+      </geometry>
+      <origin xyz="0.030 0 0" rpy="0 0 0"/>
+      <material name="cam_color">
+        <color rgba="0.0 1.0 1.0 1"/>
+      </material>
+    </visual>
+  </link>
+
+
+  <joint name="stay_pan_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="pan_tilt_stay"/>
+    <child  link="pan_link"/>
+  </joint>
+
+  <joint name="tilt" type="revolute">
+    <origin xyz="0 0 0.025" rpy="0 -1.5708 3.1416"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.6581" upper="1.6581" effort="0" velocity="0"/>
+    <parent link="tilt_link"/>
+    <child link="cam_link"/>
+  </joint>
+
+  <joint name="pan" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.5708" upper="1.5708" effort="0" velocity="0"/>
+    <parent link="pan_link"/>
+    <child link="tilt_link"/>
+  </joint>
+
+  
+</robot>
